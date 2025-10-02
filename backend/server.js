@@ -39,6 +39,20 @@ app.get("/", (req,res)=>{
 
 })
 
+app.post("/add", (req,res) =>{
+    const sql = "INSERT into role (`name`,`role`) VALUES (?,?)";
+    const values = [
+        req.body.name,
+        req.body.role
+    ]
+    database.query(sql, values, (err,data)=>{
+        if(err){
+            return res.json("Error");  
+        }
+        return res.json(data);
+    })
+})
+
 app.listen(port,() => {
     console.log(`Server is running on port : ${port}`);
 })
