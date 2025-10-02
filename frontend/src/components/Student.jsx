@@ -16,28 +16,27 @@ function Student() {
     
   return (
     <>
-        <div className="grid justify-items-start ">
-            <div className="py-5">
-                <Link to="/add" className="bg-orange-600 hover:bg-amber-400 text-white font-bold px-4 rounded py-5">Ajouter</Link>
-            </div>
-
+            
             <div className="table-fixed">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead className="text-xs text-gray-900 uppercase bg-yellow-400 dark:bg-black dark:text-black">
                         <tr>
-                            <th scope="col" class="px-6 py-3">Prenom</th>
-                            <th scope="col" class="px-6 py-3">Rôle</th>
+                            <th scope="col" className="text-lg font-bold bg-white border-b dark:bg-gray-300 dark:border-gray-900 border-gray-900 px-6 py-3">Prenom</th>
+                            <th scope="col" className="text-lg font-bold bg-white border-b dark:bg-gray-300 dark:border-gray-900 border-gray-900 px-10 py-4">Rôle</th>
+                            <th scope="col" className="text-lg font-bold bg-white border-b dark:bg-gray-300 dark:border-gray-900 border-gray-900"><Link to="/add" className="bg-green-600 hover:bg-green-900 text-white font-bold px-4 rounded py-3 mx-2">Ajouter</Link>
+</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             student.map((data, i)=> (
-                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200" key={i}>
-                                    <td className= "px-6 py-4">{data.name}</td>
-                                    <td className= "px-6 py-4">{data.role}</td>
+                                <tr className="text-lg font-bold bg-white border-b dark:bg-gray-500 dark:border-gray-900 border-gray-900" key={i}>
+                                    <td className= " text-white px-6 py-4">{data.name}</td>
+                                    {data.role === "Front-End" ? <td className= "px-6 py-4 text-yellow-500 text-lg font-bold">{data.role}</td> : data.role === "Git-Hub" ? <td className= "text-lg font-bold px-6 py-4 text-red-700">{data.role}</td> : <td className= "text-lg font-bold px-6 py-4 text-blue-900">{data.role}</td>}
+                                    
                                     <td>
-                                        <Link to={`update/${data.id}`} className='btn btn-primary'>Modifier</Link>
-                                        <button className='btn btn-danger mx-5'>Supprimer</button>
+                                        <Link to={`update/${data.id}`} className='mx-3 bg-blue-600 hover:bg-blue-900 text-white font-bold px-4 rounded py-2'>Modifier</Link>
+                                        <button className='bg-red-600 hover:bg-red-900 text-white font-bold px-4 rounded py-2 mr-2'>X</button>
                                     </td>
                                 </tr>
                             ))
@@ -47,7 +46,6 @@ function Student() {
                     </tbody>
                     </table>
             </div>
-        </div>
     </>
   )
 }
