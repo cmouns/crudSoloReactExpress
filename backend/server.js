@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import mysql from "mysql2"
 
 
 const app = express();
@@ -15,6 +16,14 @@ const corsOptions = {
   allowedHeaders : ['Content-Type', 'Authorization'], // Content-Type : Permet d'envoyer des requetes avec le body en JSON, Authorization : Permet d'envoyer des requetes avec le token dans le header
   credentials: true, // Permet d'envoyer des cookies (utile pour la gestion de session)
 }
+
+const database= await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'cda',
+})
+
 
 app.use(cors(corsOptions)); // Utilisation du middleware CORS avec les options définies
 app.use(express.json()); // Permet de parser le body des requetes en JSON
