@@ -1,26 +1,28 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React,{useState, useEffect} from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-function AddStudent() {
-    const [name, setName] = useState('');
-    const [role, setRole] = useState('');
-    const navigate = useNavigate();
+function UpdateStudent() {
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('http://localhost:8081/add', { name, role })
-            .then(res => {
-                console.log("Student added", res);
-                navigate("/");
-            })
-            .catch(err => console.log(err));
-    }
+  const [name, setName] = useState('');
+  const [role, setRole] = useState('');
+  const {id} = useParams();
+  const navigate = useNavigate();
 
-    return (
-        
-            <div className=" container flex flex-col justify-center sm:py-12">
-                <h1 className="text-2xl font-bold text-center mb-20">Ajouter un étudiant</h1>
+  function handleSubmit(event) {
+  event.preventDefault();
+  const updatedStudent = {name, role}
+  axios.put(`http://localhost:8081/update/${id}`, updatedStudent)
+  .then(res => {
+    console.log(res);
+    navigate('/');
+  })
+  .catch(err => console.log(err))
+}
+
+  return (
+    <div className=" container flex flex-col justify-center sm:py-12">
+                <h1 className="text-2xl font-bold text-center mb-20">Modifier un étudiant</h1>
 
             
                 <div className="relative py-3 sm:max-w-xl sm:mx-auto">
@@ -46,13 +48,13 @@ function AddStudent() {
                                             className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" 
                                             placeholder="Prénom" 
                                         />
-                                        <label htmlFor="name" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">
+                                        <label htmlFor="" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">
                                             Prénom
                                         </label>
                                     </div>
 
                                     <div className="relative">
-                                        <label htmlFor="roles" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choisir un rôle </label>
+                                        <label htmlFor="" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choisir un rôle </label>
                                         <select 
                                             id="roles"
                                             required
@@ -61,7 +63,7 @@ function AddStudent() {
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
 
-                                            <option value="" disabled selected hidden>Choisir un rôle</option>
+                                            <option value="" disabled defaultValue hidden>Choisir un rôle</option>
                                             <option value="Front-End">Front-End</option>
                                             <option value="Back-End">Back-End</option>
                                             <option value="Git-Hub">Git-Hub</option>
@@ -71,7 +73,7 @@ function AddStudent() {
                                     <div className="relative">
 
                                         <button type="submit" className="bg-cyan-500 text-white rounded-md px-2 py-1">
-                                            Ajouter
+                                            Modifier
                                         </button>
                                     </div>
                                 </form>
@@ -80,8 +82,7 @@ function AddStudent() {
                     </div>
                 </div>
             </div>
-        
-    )
+  )
 }
 
-export default AddStudent;
+export default UpdateStudent

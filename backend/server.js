@@ -53,6 +53,21 @@ app.post("/add", (req,res) =>{
     })
 })
 
+app.put("/update/:id", (req,res)=>{
+    const sql = "UPDATE role set `name` = ?,`role` = ? WHERE id = ?";
+    const values = [
+        req.body.name,
+        req.body.role,
+    ]
+    const id = req.params.id;
+    database.query(sql, [...values,id] , (err,data)=>{
+        if(err){
+            return res.json("Error");  
+        }
+        return res.json(data);
+    })
+})
+
 app.listen(port,() => {
     console.log(`Server is running on port : ${port}`);
 })
