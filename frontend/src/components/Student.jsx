@@ -12,6 +12,17 @@ function Student() {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete('http://localhost:8081/delete/'+id)
+      alert('Suppression réussis !')
+      window.location.reload()
+    }catch(err){
+      console.log("Sorry i can't delete it now, catched by handleDelete", err);
+      
+    }
+  }
+
   return (
     <>
       <div className="table-fixed">
@@ -94,7 +105,7 @@ function Student() {
                   </Link>
 
                   {/* Bouton supprimer */}
-                  <button className="bg-red-600 hover:bg-red-900 text-white font-bold px-4 rounded py-2">
+                  <button onClick={e=>handleDelete(data.id)} className="bg-red-600 hover:bg-red-900 text-white font-bold px-4 rounded py-2">
                     X
                   </button>
                 </td>

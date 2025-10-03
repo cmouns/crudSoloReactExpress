@@ -18,6 +18,7 @@ const corsOptions = {
   credentials: true, // Permet d'envoyer des cookies (utile pour la gestion de session)
 }
 
+
 app.use(express.json()); // Permet de parser le body des requetes en JSON
 app.use(cors(corsOptions)); // Utilisation du middleware CORS avec les options définies
 
@@ -66,6 +67,19 @@ app.put("/update/:id", (req,res)=>{
         }
         return res.json(data);
     })
+})
+
+
+app.delete("/delete/:id", (req,res)=>{
+const sql = "DELETE FROM role WHERE id = ?"
+const id = req.params.id;
+database.query(sql, id , (err,data)=>{
+    if(err){
+        console.error("Erreur delete mySQL", err)
+        return res.status(500).json({message : "erreur SQL", error: err}) 
+    }
+    return res.json(data);
+})
 })
 
 app.listen(port,() => {

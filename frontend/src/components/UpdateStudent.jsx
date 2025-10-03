@@ -17,6 +17,7 @@ function UpdateStudent() {
     console.log(res);
     navigate('/');
   })
+
   .catch(err => console.log(err))
 }
 
